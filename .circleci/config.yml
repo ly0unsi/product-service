@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:17-jdk # Use a Docker image with JDK 8
+      - image: adoptopenjdk/openjdk17:latest # Use a Docker image with JDK 8
     steps:
       - checkout # Checkout the source code
       - run:
