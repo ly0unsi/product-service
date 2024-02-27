@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.product</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>shop</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>product-service</name>
+	<description>Product-service project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -85,7 +85,20 @@
 					</excludes>
 				</configuration>
 			</plugin>
+				<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>lyounsi/circleci-${project.artifactId}:${project.version}</name>
+					</image>
+					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
+				</configuration>				
+			</plugin>
 		</plugins>
+		
+		
+		
 	</build>
 
 </project>

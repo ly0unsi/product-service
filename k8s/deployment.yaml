@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shop-deploy
+spec:
+  replicas: 2 # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: shop-deploy
+  template:
+    metadata:
+      labels:
+        app: shop-deploy
+    spec:
+      containers:
+        - name: product-service-container
+          image: lyounsi.azurecr.io/product-service
+          ports:
+            - containerPort: 8080 # Port your Spring Boot application listens on
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production # Optionally set Spring profile
