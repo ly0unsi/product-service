@@ -10,10 +10,10 @@ jobs:
       - checkout # Checkout the source code
 
       - run:
-        name: Install JDK 17
-        command: |
-          sudo apt update
-          sudo apt install -y openjdk-17-jdk
+          name: Install JDK 17
+          command: |
+            sudo apt update
+            sudo apt install -y openjdk-17-jdk
 
       # Add commands to install Maven
       - run:
