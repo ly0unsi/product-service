@@ -6,21 +6,41 @@ machine:
     - docker
 jobs:
   build:
-    docker:
-      - image: adoptopenjdk:17-jdk-hotspot # Use a Docker image with JDK 8
+    machine:
+      image: ubuntu-2204:2022.04.2
+    # docker:
+    #   - image: maven:3.8.3-openjdk-17 # Use a Docker image with JDK 8
     steps:
       - checkout # Checkout the source code
-      - setup_remote_docker
 
+      - run:
+        name: Install JDK 17
+        command: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk
+
+      # Add commands to install Maven
+      - run:
+          name: Install Maven
+          command: |
+            sudo apt install -y maven
+
+      # Add commands to install Docker
+      - run:
+          name: Install Docker
+          command: |
+            sudo apt update
+            sudo apt install -y docker.io
+            sudo systemctl start docker
+            sudo systemctl enable docker
+
+      # Continue with the existing steps
       - run:
           name: Build and Package
           command: |
-            apt-get update
-            apt-get install -y docker.io
-            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=lyounsi.azurecr.io/product-service:latest # Build the Spring Boot application
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=lyounsi.azurecr.io/product-service:latest
             echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
-            docker push lyounsi.azurecr.io/product-service:latest # Push the image to ACR
-
+            docker push lyounsi.azurecr.io/product-service:latest
   deploy:
     docker:
       - image: microsoft/azure-cli:latest # Use Azure CLI image for deployment
