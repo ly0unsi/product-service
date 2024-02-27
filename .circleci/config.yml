@@ -20,13 +20,17 @@ jobs:
           name: Install Maven
           command: |
             sudo apt install -y maven
+
+            
+      - kubernetes/install-kubectl:
+          kubectl-version: v1.14.8
           
-      - run:
-          name: Install kubectl
-          command: |
-            curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
-            echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
-            sudo apt update && sudo apt install -y kubectl
+      # - run:
+      #     name: Install kubectl
+      #     command: |
+      #       curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
+      #       echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
+      #       sudo apt update && sudo apt install -y kubectl
 
 
       # Add commands to install Docker
