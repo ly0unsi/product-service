@@ -1,5 +1,6 @@
 version: 2.1
-
+orbs:
+  kubernetes: circleci/kubernetes@0.11.2
 jobs:
   build:
     machine:
@@ -21,7 +22,7 @@ jobs:
           command: |
             sudo apt install -y maven
 
-            
+
       - kubernetes/install-kubectl:
           kubectl-version: v1.14.8
           
