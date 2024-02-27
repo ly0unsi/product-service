@@ -9,7 +9,10 @@ jobs:
       - checkout # Checkout the source code
       - run:
           name: Build and Package
-          command: mvn spring-boot:build-image -DskipTests # Build the Spring Boot application
+          command: |
+            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=lyounsi.azurecr.io/product-service:latest # Build the Spring Boot application
+            echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
+            docker push lyounsi.azurecr.io/product-service:latest # Push the image to ACR
 
   deploy:
     docker:
