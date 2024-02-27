@@ -20,7 +20,8 @@ jobs:
           command: |
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
             az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
-            kubectl apply -f kubernetes/deployment.yaml  # Apply your Kubernetes deployment configuration
+            kubectl apply -f .\k8s\deployment.yaml  # Apply your Kubernetes deployment configuration
+            kubectl apply -f .\k8s\service.yaml  # Apply your Kubernetes deployment configuration
 
 workflows:
   version: 2
