@@ -12,7 +12,6 @@ jobs:
     #   - image: maven:3.8.3-openjdk-17 # Use a Docker image with JDK 8
     steps:
       - checkout # Checkout the source code
-
       - run:
         name: Install JDK 17
         command: |
