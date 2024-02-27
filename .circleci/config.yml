@@ -8,7 +8,7 @@ jobs:
       - checkout # Checkout the source code
       - run:
           name: Build and Package
-          command: ./mvnw clean package -DskipTests # Build the Spring Boot application
+          command: mvn spring-boot:build-image -DskipTests # Build the Spring Boot application
 
   deploy:
     docker:
