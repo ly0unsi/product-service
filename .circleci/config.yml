@@ -15,6 +15,7 @@ jobs:
     docker:
       - image: microsoft/azure-cli:latest # Use Azure CLI image for deployment
     steps:
+      - setup_remote_docker
       - checkout # Checkout the source code
       - run:
           name: Deploy to AKS
