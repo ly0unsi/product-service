@@ -15,6 +15,7 @@ spec:
       containers:
         - name: product-service-container
           image: lyounsi.azurecr.io/product-service
+          imagePullPolicy: Always # Set the image pull policy to Always
           ports:
             - containerPort: 8080 # Port your Spring Boot application listens on
           env:
