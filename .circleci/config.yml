@@ -24,7 +24,12 @@ jobs:
 
 
     
-          
+      # - run:
+      #     name: Install kubectl
+      #     command: |
+      #       curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
+      #       echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
+      #       sudo apt update && sudo apt install -y kubectl
      
 
 
@@ -53,14 +58,26 @@ jobs:
             mvn spring-boot:build-image -DskipTests 
             echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
             docker push lyounsi.azurecr.io/circleci-shop:latest
+
   deploy:
-    docker:
-      - image: mcr.microsoft.com/azure-cli # Use Azure CLI image for deployment
+    machine:
+      image: ubuntu-2004:202201-01 # Use Ubuntu 20.04 LTS image
     steps:
-      - setup_remote_docker
       - checkout # Checkout the source code
-      - kubernetes/install-kubectl:
-          kubectl-version: v1.14.8
+      - run:
+          name: Install Azure CLI and kubectl
+          command: |
+            # Install prerequisites
+            sudo apt update
+            sudo apt install -y curl apt-transport-https lsb-release gnupg
+            
+            # Install Azure CLI
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+            
+            # Install kubectl
+            curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
+            echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
+            sudo apt update && sudo apt install -y kubectl
       - run:
           name: Deploy to AKS
           command: |
@@ -69,6 +86,7 @@ jobs:
             az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
             kubectl apply -f ./k8s/deployment.yaml  # Apply your Kubernetes deployment configuration
             kubectl apply -f ./k8s/service.yaml  # Apply your Kubernetes service configuration
+
 
 
 workflows:
