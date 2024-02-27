@@ -7,7 +7,7 @@ machine:
 jobs:
   build:
     docker:
-      - image: maven:3.8.3-openjdk-17 # Use a Docker image with JDK 8
+      - image: openjdk:17-oracle # Use a Docker image with JDK 8
     steps:
       - setup_remote_docker
       - checkout # Checkout the source code
