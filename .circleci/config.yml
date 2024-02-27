@@ -56,6 +56,7 @@ jobs:
           name: Deploy to AKS
           command: |
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+            az account set --subscription 2eb2c0f6-beab-4ff2-b4dc-ffa7f6b8e716
             az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
             kubectl apply -f ./k8s/deployment.yaml  # Apply your Kubernetes deployment configuration
             kubectl apply -f ./k8s/service.yaml  # Apply your Kubernetes service configuration
