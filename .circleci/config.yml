@@ -48,7 +48,7 @@ jobs:
             docker push lyounsi.azurecr.io/circleci-shop:latest
   deploy:
     docker:
-      - image: microsoft/azure-cli:latest # Use Azure CLI image for deployment
+      - image: mcr.microsoft.com/azure-cli # Use Azure CLI image for deployment
     steps:
       - setup_remote_docker
       - checkout # Checkout the source code
@@ -57,8 +57,9 @@ jobs:
           command: |
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
             az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
-            kubectl apply -f .\k8s\deployment.yaml  # Apply your Kubernetes deployment configuration
-            kubectl apply -f .\k8s\service.yaml  # Apply your Kubernetes deployment configuration
+            kubectl apply -f ./k8s/deployment.yaml  # Apply your Kubernetes deployment configuration
+            kubectl apply -f ./k8s/service.yaml  # Apply your Kubernetes service configuration
+
 
 workflows:
   version: 2
