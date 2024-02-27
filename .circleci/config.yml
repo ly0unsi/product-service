@@ -15,7 +15,8 @@ jobs:
       - run:
           name: Build and Package
           command: |
-            apk add docker-cli
+            sudo apt-get update
+            sudo apt-get install -y docker.io
             mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=lyounsi.azurecr.io/product-service:latest # Build the Spring Boot application
             echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
             docker push lyounsi.azurecr.io/product-service:latest # Push the image to ACR
