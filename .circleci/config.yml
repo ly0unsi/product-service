@@ -43,9 +43,9 @@ jobs:
       - run:
           name: Build and Package
           command: |
-            mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=lyounsi.azurecr.io/product-service:latest
+            mvn spring-boot:build-image -DskipTests 
             echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
-            docker push lyounsi.azurecr.io/product-service:latest
+            docker push lyounsi.azurecr.io/circleci-shop:latest
   deploy:
     docker:
       - image: microsoft/azure-cli:latest # Use Azure CLI image for deployment

@@ -90,7 +90,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>lyounsi/circleci-${project.artifactId}:${project.version}</name>
+						<name>lyounsi.azurecr.io/circleci-shop:latest</name>
 					</image>
 					<pullPolicy>IF_NOT_PRESENT</pullPolicy>
 				</configuration>				
