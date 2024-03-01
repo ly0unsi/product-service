@@ -5,11 +5,8 @@ jobs:
   build:
     machine:
       image: ubuntu-2204:2022.04.2
-    # docker:
-    #   - image: maven:3.8.3-openjdk-17 # Use a Docker image with JDK 8
     steps:
       - checkout # Checkout the source code
-
       - run:
           name: Install JDK 17
           command: |
@@ -21,17 +18,7 @@ jobs:
           name: Install Maven
           command: |
             sudo apt install -y maven
-
-
     
-      # - run:
-      #     name: Install kubectl
-      #     command: |
-      #       curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
-      #       echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
-      #       sudo apt update && sudo apt install -y kubectl
-     
-
 
       # Add commands to install Docker
       - run:
@@ -50,7 +37,9 @@ jobs:
               sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
             sudo apt-get update
             sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
+      - run:
+          name: Run Tests
+          command: mvn test 
       # Continue with the existing steps
       - run:
           name: Build and Package
