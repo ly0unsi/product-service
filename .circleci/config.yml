@@ -64,6 +64,7 @@ jobs:
       image: ubuntu-2004:202201-01 # Use Ubuntu 20.04 LTS image
     steps:
       - checkout # Checkout the source code
+      - kubernetes/install-kubectl
       - run:
           name: Install Azure CLI and kubectl
           command: |
@@ -75,9 +76,9 @@ jobs:
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
             
             # Install kubectl
-            curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
-            echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
-            sudo apt update && sudo apt install -y kubectl
+            # curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
+            # echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
+            # sudo apt update && sudo apt install -y kubectl
       - run:
           name: Deploy to AKS
           command: |
