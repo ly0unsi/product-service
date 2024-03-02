@@ -35,7 +35,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("hello")
+    @GetMapping("/hello")
     public String hello() {
         return "Hello, world!";
     }
