@@ -37,6 +37,6 @@ public class ProductController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "Hello, world v4";
+        return "Hello, world v5";
     }
 }
