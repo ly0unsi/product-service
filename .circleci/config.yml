@@ -74,6 +74,8 @@ jobs:
             az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
             kubectl apply -f ./k8s/deployment.yaml  # Apply your Kubernetes deployment configuration
             kubectl apply -f ./k8s/service.yaml  # Apply your Kubernetes service configuration
+            kubectl scale --replicas=0 deployment shop-app
+            kubectl scale --replicas=2 deployment shop-app
 
 
 
