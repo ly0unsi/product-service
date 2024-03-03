@@ -6,21 +6,21 @@ jobs:
     machine:
       image: ubuntu-2204:2022.04.2
     steps:
-      - checkout # Checkout the source code
+      - checkout 
       - run:
           name: Install JDK 17
           command: |
             sudo apt update
             sudo apt install -y openjdk-17-jdk
 
-      # Add commands to install Maven
+    
       - run:
           name: Install Maven
           command: |
             sudo apt install -y maven
     
 
-      # Add commands to install Docker
+     
       - run:
           name: Install Docker
           command: |
@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Run Tests
           command: mvn test 
-      # Continue with the existing steps
+     
       - run:
           name: Build and package
           command: |
@@ -52,9 +52,9 @@ jobs:
 
   deploy:
     machine:
-      image: ubuntu-2004:202201-01 # Use Ubuntu 20.04 LTS image
+      image: ubuntu-2004:202201-01 
     steps:
-      - checkout # Checkout the source code
+      - checkout
       - kubernetes/install-kubectl
       - run:
           name: Install Azure CLI and kubectl
@@ -74,8 +74,10 @@ jobs:
             az aks get-credentials --resource-group $RESOURCE_GROUP --name $AKS_CLUSTER_NAME
             kubectl apply -f ./k8s/deployment.yaml  # Apply your Kubernetes deployment configuration
             kubectl apply -f ./k8s/service.yaml  # Apply your Kubernetes service configuration
-            kubectl scale --replicas=0 deployment shop-app
-            kubectl scale --replicas=2 deployment shop-app
+            # kubectl scale --replicas=0 deployment shop-app
+            # kubectl scale --replicas=2 deployment shop-app
+
+            kubectl rollout restart deployment/shop-app
 
 
 
