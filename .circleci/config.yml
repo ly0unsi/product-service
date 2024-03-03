@@ -42,11 +42,11 @@ jobs:
           command: mvn test 
       # Continue with the existing steps
       - run:
-          name: Build and Package
+          name: Build and package
           command: |
             mvn spring-boot:build-image -DskipTests 
             echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
-            docker push lyounsi.azurecr.io/circleci-shop:latest
+            docker push lyounsi.azurecr.io/circleci-shop:1.0.0
 
   deploy:
     machine:
@@ -64,10 +64,6 @@ jobs:
             # Install Azure CLI
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
             
-            # Install kubectl
-            # curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes.gpg
-            # echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/kubernetes.gpg] http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list
-            # sudo apt update && sudo apt install -y kubectl
       - run:
           name: Deploy to AKS
           command: |
