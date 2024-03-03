@@ -44,9 +44,10 @@ jobs:
       - run:
           name: Build and package
           command: |
+           docker rmi --force lyounsi.azurecr.io/circleci-shop:1.0.0
             mvn spring-boot:build-image -DskipTests 
             echo "$DOCKER_PASSWORD" | docker login lyounsi.azurecr.io -u "$DOCKER_USERNAME" --password-stdin
-            docker rmi lyounsi.azurecr.io/circleci-shop:1.0.0
+           
             docker push lyounsi.azurecr.io/circleci-shop:1.0.0
 
   deploy:
